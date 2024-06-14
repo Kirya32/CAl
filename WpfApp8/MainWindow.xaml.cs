@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Runtime.Intrinsics.X86;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -22,32 +23,52 @@ public partial class MainWindow : Window
         InitializeComponent();
     }
 
-    private double CalculateIdealWeight(double height, string gender)
+    private double CalculateIdealWeight(double height, string gender, double weight)
     {
-        switch (gender)
+        double bmi;
+        string result = null;
+        bmi = (weight / (height * height)) * 10000;
+        if (gender == "Мужской")
         {
-            case "Мужской":
-                return (height - 100) - (height - 150) / 4;
-            case "Женский":
-                return (height - 100) - (height - 150) / 2;
-            case "Иной":
-                MessageBox.Show("Выберите существующий гендер");
-                break;
+            if (bmi < 18.5)
+                result = "Недостаток веса";
+            else if (bmi >= 18.5 && bmi < 24.9)
+                result = "Норма веса";
+            else if (bmi >= 24.9 && bmi < 29.9)
+                result = "Избыточный вес";
+            else
+                result = "Ожирение";
         }
+        else if (gender == "Женский")
+        {
+            if (bmi < 18.5)
+                result = "Недостаток веса";
+            else if (bmi >= 18.5 && bmi < 25)
+                result = "Норма веса";
+            else if (bmi >= 25 && bmi < 30)
+                result = "Избыток веса";
+            else
+                result = "Ожирение";
+        }
+        else
+        {
+            MessageBox.Show("Выберите существующий гендер");
+        }
+        
+        resultTB.Text = $"Ваш ИМТ: {bmi:F2}. + У вас {result}.";
         return 0;
     }
 
     private void Btnx_OnClick(object sender, RoutedEventArgs e)
     {
-        if (double.TryParse(heightBT.Text, out double height) && height > 0)
+        if (double.TryParse(heightBT.Text, out double height) && double.TryParse(weightBT.Text, out double weight))
         {
             string gender = Gender.SelectionBoxItem as string;
-            double idealWeight = CalculateIdealWeight(height, gender);
-            result.Content = $"Ваш идеальный вес: {idealWeight:F2} кг";
+            double idealWeight = CalculateIdealWeight(height, gender, weight);
         }
         else
         {
-            MessageBox.Show("Введите рост");
+            MessageBox.Show("Введите рост и/или вес!");
         }
     }
 }

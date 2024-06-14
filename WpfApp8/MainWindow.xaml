@@ -8,16 +8,18 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <StackPanel>
-            <Label Name="result" Margin="10" Width="175" Height="25"></Label>
+            <TextBlock Name="resultTB" Margin="10" Width="250" Height="25" HorizontalAlignment="Center"></TextBlock>
             <Label HorizontalAlignment="Left" Margin="10" Width="175" Height="25" Content="Выберите ваши пол"></Label>
             <ComboBox Name="Gender" HorizontalAlignment="Left" Margin="10" Width="175" Height="25">
                 <ComboBoxItem>Мужской</ComboBoxItem>
                 <ComboBoxItem>Женский</ComboBoxItem>
                 <ComboBoxItem>Иной</ComboBoxItem>
             </ComboBox>
+            <Label HorizontalAlignment="Left" Margin="10" Width="175" Height="25" Content="Введите вес"></Label>
+            <TextBox HorizontalAlignment="Left" Margin="10" Width="175" Height="25" Name="weightBT"></TextBox>
             <Label HorizontalAlignment="Left" Margin="10" Width="175" Height="25" Content="Введите рост"></Label>
             <TextBox HorizontalAlignment="Left" Width="175" Height="25" Margin="10" Name="heightBT"></TextBox>
-            <Button HorizontalAlignment="Left" Width="175" Height="25" Margin="10" Name="Btnx" Click="Btnx_OnClick">Вычислить оптимальный вес</Button>
+            <Button HorizontalAlignment="Left" Width="175" Height="25" Margin="10" Name="Btnx" Click="Btnx_OnClick">Вычислить ИМТ</Button>
         </StackPanel>
     </Grid>
 </Window>
