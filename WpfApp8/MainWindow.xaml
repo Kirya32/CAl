@@ -1,0 +1,23 @@
+﻿<Window x:Class="WpfApp8.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp8"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <StackPanel>
+            <Label Name="result" Margin="10" Width="175" Height="25"></Label>
+            <Label HorizontalAlignment="Left" Margin="10" Width="175" Height="25" Content="Выберите ваши пол"></Label>
+            <ComboBox Name="Gender" HorizontalAlignment="Left" Margin="10" Width="175" Height="25">
+                <ComboBoxItem>Мужской</ComboBoxItem>
+                <ComboBoxItem>Женский</ComboBoxItem>
+                <ComboBoxItem>Иной</ComboBoxItem>
+            </ComboBox>
+            <Label HorizontalAlignment="Left" Margin="10" Width="175" Height="25" Content="Введите рост"></Label>
+            <TextBox HorizontalAlignment="Left" Width="175" Height="25" Margin="10" Name="heightBT"></TextBox>
+            <Button HorizontalAlignment="Left" Width="175" Height="25" Margin="10" Name="Btnx" Click="Btnx_OnClick">Вычислить оптимальный вес</Button>
+        </StackPanel>
+    </Grid>
+</Window>
