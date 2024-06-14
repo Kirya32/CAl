@@ -22,7 +22,6 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
     }
-
     private double CalculateIdealWeight(double height, string gender, double weight)
     {
         double bmi;
@@ -36,8 +35,10 @@ public partial class MainWindow : Window
                 result = "Норма веса";
             else if (bmi >= 24.9 && bmi < 29.9)
                 result = "Избыточный вес";
-            else
+            else if (bmi > 29.9)
                 result = "Ожирение";
+            else
+                result = "Ошибка"; 
         }
         else if (gender == "Женский")
         {
@@ -47,14 +48,15 @@ public partial class MainWindow : Window
                 result = "Норма веса";
             else if (bmi >= 25 && bmi < 30)
                 result = "Избыток веса";
-            else
+            else if (bmi > 30)
                 result = "Ожирение";
+            else
+                result = "Ошибка";
         }
         else
         {
             MessageBox.Show("Выберите существующий гендер");
         }
-        
         resultTB.Text = $"Ваш ИМТ: {bmi:F2}. + У вас {result}.";
         return 0;
     }
@@ -64,11 +66,11 @@ public partial class MainWindow : Window
         if (double.TryParse(heightBT.Text, out double height) && double.TryParse(weightBT.Text, out double weight))
         {
             string gender = Gender.SelectionBoxItem as string;
-            double idealWeight = CalculateIdealWeight(height, gender, weight);
+            CalculateIdealWeight(height, gender, weight);
         }
         else
         {
-            MessageBox.Show("Введите рост и/или вес!");
+            MessageBox.Show("Рост и/или вес не должен быть пустим!");
         }
     }
 }
