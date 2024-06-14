@@ -33,9 +33,6 @@ public partial class MainWindow : Window
             case "Иной":
                 MessageBox.Show("Выберите существующий гендер");
                 break;
-            default:
-                MessageBox.Show("Не удалось вычислить вес");
-                break;
         }
         return 0;
     }
