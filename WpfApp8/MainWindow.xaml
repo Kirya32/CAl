@@ -8,7 +8,7 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <StackPanel>
-            <TextBlock Name="resultTB" Margin="10" Width="250" Height="25" HorizontalAlignment="Center"></TextBlock>
+            <TextBlock Name="resultTB" Width="320" Height="50" HorizontalAlignment="Center"></TextBlock>
             <Label HorizontalAlignment="Left" Margin="10" Width="175" Height="25" Content="Выберите ваши пол"></Label>
             <ComboBox Name="Gender" HorizontalAlignment="Left" Margin="10" Width="175" Height="25">
                 <ComboBoxItem>Мужской</ComboBoxItem>
