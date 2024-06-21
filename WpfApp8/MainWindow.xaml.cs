@@ -1,4 +1,5 @@
-﻿using System.Runtime.Intrinsics.X86;
+﻿using System.ComponentModel.Design;
+using System.Runtime.Intrinsics.X86;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfApp8.Logic;
 
 namespace WpfApp8;
 
@@ -28,63 +30,20 @@ public partial class MainWindow : Window
         double bmi;
         string result = null;
         bmi = (weight / (height * height)) * 10000;
+        
         if (gender == "Мужской")
         {
-            if (bmi < 18.5)
-            {
-                Foreground = Brushes.DarkGreen;
-                result = "Недостаток веса. \nРекмондуется повысить массу тела"; 
-            }
-            else if (bmi >= 18.5 && bmi < 24.9)
-            {
-                Foreground = Brushes.LimeGreen;
-                result = "Норма веса.";
-            }
-            else if (bmi >= 24.9 && bmi < 29.9)
-            {
-                Foreground = Brushes.Orange;
-                result = "Избыток веса. \nРекомендуется снизить массу тела!";
-            }
-                
-            else if (bmi > 29.9)
-            {
-                Foreground = Brushes.Red;
-                result = "Ожирение. \nНастоятельно рекомендуется снизить массу тела!";
-            }
-                
-            else
-                result = "Ошибка"; 
-        }
-        else if (gender == "Женский")
-        {
-            if (bmi < 18.5)
-            {
-                Foreground = Brushes.DarkGreen;
-               result = "Недостаток веса. \nРекмондуется повысить массу тела"; 
-            }
-            else if (bmi >= 18.5 && bmi < 25)
-            {
-                Foreground = Brushes.LimeGreen;
-                result = "Норма веса.";
-            }
-            else if (bmi >= 25 && bmi < 30)
-            {
-                Foreground = Brushes.Orange;
-                result = "Избыток веса. \nРекомендуется снизить массу тела!";
-            }
-                
-            else if (bmi > 30)
-            {
-                Foreground = Brushes.Red;
-                result = "Ожирение. \nНастоятельно рекомендуется снизить массу тела!";
-            }
-            else
-                result = "Ошибка";
+            var bmiController = new ManBmi();
+            bmi = bmiController.Calc(weight, height);
+            result = bmiController.GetRecomandation(bmi);
         }
         else
         {
-            MessageBox.Show("Выберите существующий гендер");
+            var bmiController = new WooManBmi();
+            bmi = bmiController.Calc(weight, height); 
+            result = bmiController.GetRecomandation(bmi);
         }
+        
         resultTB.Text = $"Ваш ИМТ: {bmi:F2}. + У вас {result}.";
         return 0;
     }
