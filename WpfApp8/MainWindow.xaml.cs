@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿﻿using System.Runtime.Intrinsics.X86;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -20,34 +21,89 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+        Gender.ItemsSource = Enum.GetValues(typeof(Gender)).Cast<Gender>();
     }
-
-    private double CalculateIdealWeight(double height, string gender)
+    private double CalculateIdealWeight(double bel,double height,double age,double weight,string activity, string gender, string task)
     {
+        double bju;
+        double bmi;
+        string result = null;
+        //bju = (10 * weight + 6.25 * height + 5 * age + gender) + activity;
+            bmi = (weight / (height * height)) * 10000;
         switch (gender)
         {
             case "Мужской":
-                return (height - 100) - (height - 150) / 4;
+                switch (bmi)
+                
+                {
+                    case < 18.5:
+                        Foreground = Brushes.DarkGreen;
+                        result = "Недостаток веса. \nРекмондуется повысить массу тела";
+                        break;
+                    case >= 18.5 and < 24.9:
+                        Foreground = Brushes.LimeGreen;
+                        result = "Норма веса.";
+                        break;
+                    case >= 24.9 and < 29.9:
+                        Foreground = Brushes.Orange;
+                        result = "Избыток веса. \nРекомендуется снизить массу тела!";
+                        break;
+                    case > 29.9:
+                        Foreground = Brushes.Red;
+                        result = "Ожирение. \nНастоятельно рекомендуется снизить массу тела!";
+                        break;
+                    default:
+                        result = "Ошибка";
+                        break;
+                }
+
+                break;
             case "Женский":
-                return (height - 100) - (height - 150) / 2;
-            case "Иной":
+                switch (bmi)
+                {
+                    case < 18.5:
+                        Foreground = Brushes.DarkGreen;
+                        result = "Недостаток веса. \nРекмондуется повысить массу тела";
+                        break;
+                    case >= 18.5 and < 25:
+                        Foreground = Brushes.LimeGreen;
+                        result = "Норма веса.";
+                        break;
+                    case >= 25 and < 30:
+                        Foreground = Brushes.Orange;
+                        result = "Избыток веса. \nРекомендуется снизить массу тела!";
+                        break;
+                    case > 30:
+                        Foreground = Brushes.Red;
+                        result = "Ожирение. \nНастоятельно рекомендуется снизить массу тела!";
+                        break;
+                    default:
+                        result = "Ошибка";
+                        break;
+                }
+
+                break;
+            default:
                 MessageBox.Show("Выберите существующий гендер");
                 break;
         }
+        resultTB.Text = $"Ваш ИМТ: {bmi:F2}. + У вас {result}.";
         return 0;
     }
 
     private void Btnx_OnClick(object sender, RoutedEventArgs e)
     {
-        if (double.TryParse(heightBT.Text, out double height) && height > 0)
+        if (double.TryParse(heightBT.Text, out double height) && double.TryParse(weightBT.Text, out double weight) && double.TryParse(ageTB.Text, out double age) 
+            && double.TryParse(BelTB.Text, out double bel))
         {
+            string activity = Activity.SelectionBoxItem as string;
             string gender = Gender.SelectionBoxItem as string;
-            double idealWeight = CalculateIdealWeight(height, gender);
-            result.Content = $"Ваш идеальный вес: {idealWeight:F2} кг";
+            string task = Task.SelectionBoxItem as string;
+            CalculateIdealWeight(bel, height, age, weight, activity, gender, task);
         }
         else
         {
-            MessageBox.Show("Введите рост");
+            MessageBox.Show("Поля не должен быть пустым!");
         }
     }
 }
